@@ -1,0 +1,412 @@
+{
+  "entities": {
+    "StudentProfile": {
+      "title": "StudentProfile",
+      "description": "Core non-PII student learning profile and progress state.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "board": {
+          "type": "string",
+          "enum": ["CBSE", "BIHAR", "UP", "MP", "ICSE"]
+        },
+        "language": {
+          "type": "string",
+          "enum": ["en", "hi"]
+        },
+        "academicYear": {
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 20
+        },
+        "isPremium": {
+          "type": "boolean"
+        },
+        "streakDays": {
+          "type": "number"
+        },
+        "completedChapters": {
+          "type": "array",
+          "description": "List of completed chapter IDs (max 150)."
+        },
+        "weakTopics": {
+          "type": "array",
+          "description": "List of weak topic strings (max 30)."
+        },
+        "lastChapterId": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "uid",
+        "displayName",
+        "board",
+        "language",
+        "academicYear",
+        "isPremium",
+        "streakDays",
+        "completedChapters",
+        "weakTopics",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "StudentPrivateInfo": {
+      "title": "StudentPrivateInfo",
+      "description": "Isolated PII document for student email and phone.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "email": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 200
+        },
+        "phone": {
+          "type": "string",
+          "maxLength": 30
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["uid", "email", "updatedAt"]
+    },
+    "Chapter": {
+      "title": "Chapter",
+      "description": "Board-specific Class 10 chapter content managed by admins.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "board": {
+          "type": "string",
+          "enum": ["CBSE", "BIHAR", "UP", "MP", "ICSE"]
+        },
+        "subject": {
+          "type": "string",
+          "enum": ["MATH", "SCIENCE", "SST", "HINDI", "ENGLISH", "SANSKRIT"]
+        },
+        "chapterNumber": {
+          "type": "number"
+        },
+        "titleEn": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 180
+        },
+        "titleHi": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 180
+        },
+        "summaryEn": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        },
+        "summaryHi": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        },
+        "isPremium": {
+          "type": "boolean"
+        },
+        "videoUrl": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "pdfUrl": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "board",
+        "subject",
+        "chapterNumber",
+        "titleEn",
+        "titleHi",
+        "summaryEn",
+        "summaryHi",
+        "isPremium",
+        "updatedAt"
+      ]
+    },
+    "TestAttempt": {
+      "title": "TestAttempt",
+      "description": "Immutable student test submission record.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "testId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "testTitle": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 180
+        },
+        "board": {
+          "type": "string",
+          "enum": ["CBSE", "BIHAR", "UP", "MP", "ICSE"]
+        },
+        "score": {
+          "type": "number"
+        },
+        "totalQuestions": {
+          "type": "number"
+        },
+        "durationSeconds": {
+          "type": "number"
+        },
+        "weakTopics": {
+          "type": "array"
+        },
+        "submittedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "testId",
+        "testTitle",
+        "board",
+        "score",
+        "totalQuestions",
+        "durationSeconds",
+        "weakTopics",
+        "submittedAt"
+      ]
+    },
+    "VideoProgress": {
+      "title": "VideoProgress",
+      "description": "Student video playback progress per chapter.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "chapterId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "watchedSeconds": {
+          "type": "number"
+        },
+        "totalSeconds": {
+          "type": "number"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["userId", "chapterId", "watchedSeconds", "totalSeconds", "updatedAt"]
+    },
+    "AppNotification": {
+      "title": "AppNotification",
+      "description": "Board alerts and teacher announcements.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "titleEn": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 180
+        },
+        "titleHi": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 180
+        },
+        "bodyEn": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        },
+        "bodyHi": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        },
+        "board": {
+          "type": "string",
+          "enum": ["ALL", "CBSE", "BIHAR", "UP", "MP", "ICSE"]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["id", "titleEn", "titleHi", "bodyEn", "bodyHi", "board", "createdAt"]
+    },
+    "CustomTest": {
+      "title": "CustomTest",
+      "description": "Admin-created test series or question additions.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "titleEn": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 180
+        },
+        "titleHi": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 180
+        },
+        "board": {
+          "type": "string",
+          "enum": ["CBSE", "BIHAR", "UP", "MP", "ICSE"]
+        },
+        "category": {
+          "type": "string",
+          "enum": ["CHAPTER", "SUBJECT", "WEEKLY", "MONTHLY", "FULL", "BOARD_MOCK"]
+        },
+        "durationMinutes": {
+          "type": "number"
+        },
+        "isPremium": {
+          "type": "boolean"
+        },
+        "questions": {
+          "type": "array"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "titleEn",
+        "titleHi",
+        "board",
+        "category",
+        "durationMinutes",
+        "isPremium",
+        "questions",
+        "updatedAt"
+      ]
+    },
+    "AdminRecord": {
+      "title": "AdminRecord",
+      "description": "Authorized admin UID registry.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["uid", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/students/{userId}": {
+      "schema": { "$ref": "#/entities/StudentProfile" },
+      "description": "Student non-PII learning profiles."
+    },
+    "/students/{userId}/private/{docId}": {
+      "schema": { "$ref": "#/entities/StudentPrivateInfo" },
+      "description": "Student isolated PII records."
+    },
+    "/chapters/{chapterId}": {
+      "schema": { "$ref": "#/entities/Chapter" },
+      "description": "Admin-managed Class 10 syllabus chapters."
+    },
+    "/customTests/{testId}": {
+      "schema": { "$ref": "#/entities/CustomTest" },
+      "description": "Admin-managed online test series."
+    },
+    "/testAttempts/{attemptId}": {
+      "schema": { "$ref": "#/entities/TestAttempt" },
+      "description": "Student test attempt results."
+    },
+    "/videoProgress/{progressId}": {
+      "schema": { "$ref": "#/entities/VideoProgress" },
+      "description": "Student video playback progress."
+    },
+    "/notifications/{notificationId}": {
+      "schema": { "$ref": "#/entities/AppNotification" },
+      "description": "Board notifications and announcements."
+    },
+    "/admins/{adminId}": {
+      "schema": { "$ref": "#/entities/AdminRecord" },
+      "description": "Trusted admin UID registry."
+    }
+  }
+}

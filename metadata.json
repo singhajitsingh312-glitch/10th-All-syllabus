@@ -1,0 +1,6 @@
+{
+  "name": "Smart Class 10",
+  "description": "Bilingual (Hindi & English) Class 10 board exam preparation platform for CBSE, Bihar, UP, MP, and ICSE boards with video classes, PDF notes, online test series, analytics, admin panel, and full Android Studio Kotlin/Jetpack Compose project.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
